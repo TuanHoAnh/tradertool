@@ -1,8 +1,8 @@
 import json
-from tradertool.bittrex import Bittrex
+
 import json
 
-from tradertool.bittrex import Bittrex
+from tradertool.bittrex.bittrex import Bittrex, API_V2_0, API_V1_1, BUY_ORDERBOOK, TICKINTERVAL_ONEMIN
 
 
 # IS_CI_ENV = True if 'IN_CI' in os.environ else False
@@ -35,13 +35,13 @@ class buyBittrex:
             ticket = self.bittrex.get_ticker(market)
             bid = ticket["result"]["Bid"]
             print("\nwaiting... bid="+str(bid)+" time:"+str(count))
-        print("\nsucess")
+        print("\nsuccess")
         self.bittrex.sell_limit(market,self.volum,bid)
 
     def run(self,market,bit):
         self.setUp()
         # volum = self.buyCoin(market,bit)
-        self.ask=0.00054586
+        self.ask=0.00053
         self.volum=2.85216054
         ask = self.sellCoin(market)
         self.ask

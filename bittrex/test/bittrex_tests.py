@@ -2,7 +2,7 @@ import json
 import os
 import unittest
 
-from tradertool.bittrex import Bittrex, API_V2_0, API_V1_1, BUY_ORDERBOOK, TICKINTERVAL_ONEMIN
+from tradertool.bittrex.bittrex import Bittrex, API_V2_0, API_V1_1, BUY_ORDERBOOK, TICKINTERVAL_ONEMIN
 
 IS_CI_ENV = True if 'IN_CI' in os.environ else False
 
