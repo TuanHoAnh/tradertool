@@ -1,15 +1,13 @@
-import json
-from tradertool.bittrex import Bittrex
-import json
 
-from tradertool.bittrex import Bittrex
+import json
+from bittrex.bittrex import Bittrex
 
 
 # IS_CI_ENV = True if 'IN_CI' in os.environ else False
 
 # def test_get_ticker(self):
 #     actual = self.bittrex.get_ticker(market='BTC-LTC')
-class buyBittrex:
+class TradingBittrex:
     ask = 0
     volum =0
     def setUp(self):
@@ -45,5 +43,5 @@ class buyBittrex:
         self.volum=2.85216054
         ask = self.sellCoin(market)
         self.ask
-buy = buyBittrex()
+buy = TradingBittrex()
 buy.run("BTC-ARK",0.001)
