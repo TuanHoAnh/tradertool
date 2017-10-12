@@ -1,17 +1,12 @@
-import json
 
 import json
+from tradertool.bittrex.bittrex import Bittrex
+from decimal import *
 
-from tradertool.bittrex.bittrex import Bittrex, API_V2_0, API_V1_1, BUY_ORDERBOOK, TICKINTERVAL_ONEMIN
 
-
-# IS_CI_ENV = True if 'IN_CI' in os.environ else False
-
-# def test_get_ticker(self):
-#     actual = self.bittrex.get_ticker(market='BTC-LTC')
-class buyBittrex:
+class TradingBittrex:
     ask = 0
-    volum =0
+    volum = 0
     def setUp(self):
         with open("secrets.json") as secrets_file:
             self.secrets = json.load(secrets_file)
@@ -22,7 +17,7 @@ class buyBittrex:
         ticket = self.bittrex.get_ticker(market)
         self.ask = ticket["result"]["Ask"]
         self.volum = bit/self.ask
-        # actual = self.bittrex.buy_limit(market,volum,self.ask)
+        actual = self.bittrex.buy_limit(market,self.volum,self.ask)
 
     def sellCoin(self,market):
         ticket = self.bittrex.get_ticker(market)
@@ -34,16 +29,11 @@ class buyBittrex:
             count += 1
             ticket = self.bittrex.get_ticker(market)
             bid = ticket["result"]["Bid"]
-            print("\nwaiting... bid="+str(bid)+" time:"+str(count))
-        print("\nsuccess")
+            print("\nwaiting... bid="+str(round(Decimal(bid),8) )+" time:"+str(count))
+        print("\nsucess")
         self.bittrex.sell_limit(market,self.volum,bid)
 
     def run(self,market,bit):
         self.setUp()
-        # volum = self.buyCoin(market,bit)
-        self.ask=0.00053
-        self.volum=2.85216054
+        volum = self.buyCoin(market,bit)
         ask = self.sellCoin(market)
-        self.ask
-buy = buyBittrex()
-buy.run("BTC-ARK",0.001)
