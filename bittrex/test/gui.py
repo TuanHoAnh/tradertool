@@ -2,11 +2,17 @@
 from tradertool.bittrex.appJar.appjar import gui
 from tradertool.bittrex.test.simple_tool import TradingBittrex
 # handle button events
-def click(button):
-    buy = TradingBittrex()
-    market = app.getEntry("market")
-    volume = app.getEntry("volumeBitcoin")
-    buy.run(market, volume)
+
+class Action:
+    def click(self):
+        buy = TradingBittrex()
+        market = app.getEntry("market")
+        volume = app.getEntry("volumeBitcoin")
+        buy.run(market, volume)
+
+
+    def changeStatus(self, content):
+        app.setMessage('Selling', content)
 
 
 # create a GUI variable called app
@@ -28,11 +34,14 @@ app.addLabel("labelMarket", "Market", 0, 0,1)
 app.addEntry("market", 0, 1,2)
 app.addLabel("labelVolume", "Volume Bitcoin", 1, 0,1)
 app.addNumericEntry("volumeBitcoin", 1, 1,2)
-app.addButtons(["Submit"], click, 2, 0, 2)
-app.addLabel("lbSelling","Checking bid now",3,0,1,1)
-app.addMessage("Selling","hello cmdslajfdlajf",3,1,1,1)
-app.stopLabelFrame()
+action = Action
+app.addButtons(["Submit"], action.click, 2, 0, 2)
 
+app.stopLabelFrame()
+app.startLabelFrame("Sell coin")
+app.addLabel("lbSelling","Checking bid now",3,0)
+app.addMessage("Selling","hello cmdslajfdlajf",3,1)
+app.stopLabelFrame()
 # app.setFocus("Market")
 # start the GUI
 app.go()
