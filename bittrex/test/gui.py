@@ -1,6 +1,6 @@
 # import the library
-from tradertool.bittrex.appJar.appjar import gui
-from tradertool.bittrex.test.simple_tool import TradingBittrex
+from bittrex.appJar.appjar import gui
+from bittrex.test.simple_tool import TradingBittrex
 # handle button events
 
 class Action:

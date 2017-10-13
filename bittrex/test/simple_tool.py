@@ -1,6 +1,6 @@
 
 import json
-from tradertool.bittrex.bittrex import Bittrex
+from bittrex.bittrex import Bittrex
 from decimal import *
 
 
