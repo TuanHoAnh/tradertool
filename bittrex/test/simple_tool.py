@@ -7,6 +7,7 @@ from decimal import *
 class TradingBittrex:
     ask = 0
     volum = 0
+    bid = 0
     def setUp(self):
         with open("secrets.json") as secrets_file:
             self.secrets = json.load(secrets_file)
@@ -17,23 +18,24 @@ class TradingBittrex:
         ticket = self.bittrex.get_ticker(market)
         self.ask = ticket["result"]["Ask"]
         self.volum = bit/self.ask
-        actual = self.bittrex.buy_limit(market,self.volum,self.ask)
+        # actual = self.bittrex.buy_limit(market,self.volum,self.ask)
 
-    def sellCoin(self,market):
+    def sellCoin(self,market,callback):
         ticket = self.bittrex.get_ticker(market)
-        bid = ticket["result"]["Bid"]
+        self.bid = ticket["result"]["Bid"]
         priceUp= self.ask*1.05
         priceDown = self.ask*0.95
         count =0
-        while((priceDown<=bid)&(bid<=priceUp)):
+        while((priceDown<=self.bid)&(self.bid<=priceUp)):
             count += 1
             ticket = self.bittrex.get_ticker(market)
-            bid = ticket["result"]["Bid"]
-            print("\nwaiting... bid="+str(round(Decimal(bid),8) )+" time:"+str(count))
+            self.bid = round(Decimal(ticket["result"]["Bid"]),8)
+            callback("time "+str(count)+": bid = "+str(self.bid))
+            print("\nwaiting... bid="+str(self.bid)+" time:"+str(count))
         print("\nsucess")
-        self.bittrex.sell_limit(market,self.volum,bid)
+        # self.bittrex.sell_limit(market,self.volum,self.bid)
 
-    def run(self,market,bit):
+    def run(self,market,bit,callback):
         self.setUp()
         volum = self.buyCoin(market,bit)
-        ask = self.sellCoin(market)
+        ask = self.sellCoin(market,callback)
